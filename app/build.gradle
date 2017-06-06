@@ -19,7 +19,8 @@ android {
         }
     }
 }
-
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

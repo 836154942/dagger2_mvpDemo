@@ -12,6 +12,7 @@ import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 
+
 /**
  * Created by JokAr on 16/8/8.
  */
@@ -32,14 +33,14 @@ public class AnnotatedClass {
                 .addAnnotation(Override.class)
                 .addParameter(TypeName.get(mTypeElement.asType()), "host", Modifier.FINAL)
                 .addParameter(TypeName.OBJECT, "object");
-        injectMethod.addStatement("android.widget.Toast.makeText(host, $L, android.widget.Toast.LENGTH_SHORT).show()", "\"build生成的toast\"")
+        injectMethod.addStatement("android.widget.Toast.makeText(host, $L, android.widget.Toast.LENGTH_SHORT).show()", "\"build  toast\"")
                 .addStatement("((com.spc.spc.myapplication.di.component.ActivityComponent)object).inject(host)");
 
         //generaClass
 
         TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
-                .addModifiers(Modifier.PUBLIC)
 //                .addAnnotation(InjectActivity.class)
+                .addModifiers(Modifier.PUBLIC)
                 .addSuperinterface(ParameterizedTypeName.get(TypeUtil.INJET, TypeName.get(mTypeElement.asType())))
                 .addMethod(injectMethod.build())
                 .build();

@@ -4,14 +4,10 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/dagger2_mvpDemo.iml" filepath="$PROJECT_DIR$/dagger2_mvpDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/dagger2_mvpDemo-master.iml" filepath="$PROJECT_DIR$/dagger2_mvpDemo-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/inject_annotation/inject_annotation.iml" filepath="$PROJECT_DIR$/inject_annotation/inject_annotation.iml" />
-      <module fileurl="file://$PROJECT_DIR$/inject_annotation/inject_annotation.iml" filepath="$PROJECT_DIR$/inject_annotation/inject_annotation.iml" />
       <module fileurl="file://$PROJECT_DIR$/inject_comiler/inject_comiler.iml" filepath="$PROJECT_DIR$/inject_comiler/inject_comiler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/inject_comiler/inject_comiler.iml" filepath="$PROJECT_DIR$/inject_comiler/inject_comiler.iml" />
-      <module fileurl="file://$PROJECT_DIR$/injectlib/injectlib.iml" filepath="$PROJECT_DIR$/injectlib/injectlib.iml" />
       <module fileurl="file://$PROJECT_DIR$/injectlib/injectlib.iml" filepath="$PROJECT_DIR$/injectlib/injectlib.iml" />
     </modules>
   </component>
