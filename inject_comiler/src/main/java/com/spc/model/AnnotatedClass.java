@@ -31,15 +31,12 @@ public class AnnotatedClass {
                 .addModifiers(Modifier.PUBLIC)
                 .addAnnotation(Override.class)
                 .addParameter(TypeName.get(mTypeElement.asType()), "host", Modifier.FINAL)
-                .addParameter(TypeName.OBJECT, "source");
-        injectMethod.addStatement("android.widget.Toast.makeText(host, $L, android.widget.Toast.LENGTH_SHORT).show()", "\"asdjgasdgasdga\"")
-
-                .addStatement("com.spc.spc.myapplication.di.component.DaggerActivityComponent.builder()\n" +
-                        "                .appcomponent(com.spc.spc.myapplication.base.MyApplication.getInst().getAppComponent())\n" +
-                        "                .activityModule(new com.spc.spc.myapplication.di.module.ActivityModule(host))\n" +
-                        "                .build().inject(host)");
+                .addParameter(TypeName.OBJECT, "object");
+        injectMethod.addStatement("android.widget.Toast.makeText(host, $L, android.widget.Toast.LENGTH_SHORT).show()", "\"build生成的toast\"")
+                .addStatement("((com.spc.spc.myapplication.di.component.ActivityComponent)object).inject(host)");
 
         //generaClass
+
         TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
                 .addModifiers(Modifier.PUBLIC)
 //                .addAnnotation(InjectActivity.class)

@@ -3,6 +3,8 @@ package com.spc.spc.myapplication.base;
 import android.os.Bundle;
 
 import com.example.injectlib.ActivityInject;
+import com.spc.spc.myapplication.di.component.DaggerActivityComponent;
+import com.spc.spc.myapplication.di.module.ActivityModule;
 
 import javax.inject.Inject;
 
@@ -18,7 +20,11 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityInject.inject(this);
+        ActivityInject.inject(this,
+        DaggerActivityComponent.builder()
+                .appcomponent(MyApplication.getInst().getAppComponent())
+                .activityModule(new ActivityModule(this))
+                .build());
         mvpPresenter.attachView(this);
 
     }
