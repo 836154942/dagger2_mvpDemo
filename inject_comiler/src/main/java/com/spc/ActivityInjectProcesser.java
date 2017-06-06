@@ -1,10 +1,7 @@
 package com.spc;
 
-
 import com.google.auto.service.AutoService;
-import com.spc.model.ActivityInjectField;
 import com.spc.model.AnnotatedClass;
-import com.spc.model.OnClickMethod;
 
 import java.io.IOException;
 import java.util.LinkedHashSet;
@@ -50,7 +47,6 @@ public class ActivityInjectProcesser extends AbstractProcessor {
         mAnnotatedClassMap.clear();
 
         try {
-//            processAcInject(roundEnv);
             processOnClick(roundEnv);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -67,22 +63,13 @@ public class ActivityInjectProcesser extends AbstractProcessor {
         return true;
     }
 
-    private void processAcInject(RoundEnvironment roundEnv) throws IllegalArgumentException {
-
-        for (Element element : roundEnv.getElementsAnnotatedWith(InjectActivity.class)) {
-            AnnotatedClass annotatedClass = getAnnotatedClass(element);
-            ActivityInjectField bindViewField = new ActivityInjectField(element);
-            annotatedClass.addField(bindViewField);
-        }
-    }
 
     private void processOnClick(RoundEnvironment roundEnv) throws IllegalArgumentException {
-        for (Element element : roundEnv.getElementsAnnotatedWith(OnClick2.class)) {
-            AnnotatedClass annotatedClass = getAnnotatedClass(element);
-            OnClickMethod onClickMethod = new OnClickMethod(element);
-            annotatedClass.addMethod(onClickMethod);
+        for (Element element : roundEnv.getElementsAnnotatedWith(ActivityInject.class)) {
+            getAnnotatedClass(element);
         }
     }
+
     private AnnotatedClass getAnnotatedClass(Element element) {
         TypeElement typeElement = (TypeElement) element.getEnclosingElement();
         String fullName = typeElement.getQualifiedName().toString();
@@ -104,8 +91,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
-        types.add(InjectActivity.class.getCanonicalName());
-        types.add(OnClick2.class.getCanonicalName());
+        types.add(ActivityInject.class.getCanonicalName());
         return types;
     }
 
