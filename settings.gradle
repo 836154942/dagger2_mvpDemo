@@ -1,0 +1,1 @@
+include ':app', ':inject_comiler', ':inject_annotation', ':injectlib'
