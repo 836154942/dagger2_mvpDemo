@@ -8,11 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Created by JokAr on 16/8/6.
  */
-//@Retention(RetentionPolicy.RUNTIME)
-//@Target(ElementType.TYPE)
 
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.TYPE)
 public @interface ActivityInject {
-//    int[] value();
 }
