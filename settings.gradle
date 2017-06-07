@@ -1,1 +1,1 @@
-include ':app', ':inject_comiler', ':inject_annotation', ':injectlib',":basesdk"
+include ':app', ':inject_comiler', ':inject_annotation',":basesdk"

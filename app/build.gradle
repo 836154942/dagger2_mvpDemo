@@ -51,6 +51,5 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile project(':inject_annotation')
     apt project(':inject_comiler')
-    compile project(':injectlib')
     compile project(':basesdk')
 }

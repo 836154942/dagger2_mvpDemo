@@ -1,12 +1,11 @@
 package com.spc.model;
 
 
-import com.spc.ActivityScope;
 import com.spc.TypeUtil;
 import com.squareup.javapoet.AnnotationSpec;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
@@ -36,24 +35,20 @@ public class AnnotatedClass {
 
 
     public JavaFile generateFile() {
-        waring("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-        waring("com.spc.spc.myapplication.ui.activity.&S.builder()", mTypeElement.getSimpleName()+"&&Component");
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Override.class)
-                .addParameter(TypeName.get(mTypeElement.asType()), "host", Modifier.FINAL)
-                .addParameter(TypeName.OBJECT, "object");
-        injectMethod.addStatement("android.widget.Toast.makeText(host, $L, android.widget.Toast.LENGTH_SHORT).show()", "\"build  toast\"")
-//                 .addStatement("((com.spc.spc.myapplication.di.component.ActivityComponent)object).inject(host)");
-                .addStatement("com.spc.spc.myapplication.ui.activity.$L.builder()" +
-                        "                .appcomponent(com.spc.spc.myapplication.base.MyApplication.getInst().getAppComponent())\n" +
-                        "                .activityModule(new com.spc.spc.myapplication.di.module.ActivityModule(host))\n" +
-                        "                .build().inject(host)", "Dagger"+mTypeElement.getSimpleName()+"$$Component");
-        waring("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
+                .addParameter(TypeName.get(mTypeElement.asType()), "activity", Modifier.FINAL);
+        injectMethod.addStatement(TypeUtil.MAIN_ACTIVITY_PATH + ".$L.builder()\n.appcomponent($L)\n" +
+                        ".activityModule(new $L(activity))\n" +
+                        ".build()\n.$L(activity)",
+                "Dagger" + mTypeElement.getSimpleName() + "$$Component",
+                TypeUtil.APPCOMPONENT_PROVIDE_PATH,
+                TypeUtil.ACTIVITY_MODULE_PATH,
+                TypeUtil.METHOD_NAME);
         //generaClass
         TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
                 .addModifiers(Modifier.PUBLIC)
-                .addSuperinterface(ParameterizedTypeName.get(TypeUtil.INJET, TypeName.get(mTypeElement.asType())))
+//                .addSuperinterface(ParameterizedTypeName.get(TypeUtil.INJET_NAME, TypeName.get(mTypeElement.asType())))
                 .addMethod(injectMethod.build())
                 .build();
         String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
@@ -64,23 +59,23 @@ public class AnnotatedClass {
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addParameter(TypeName.get(mTypeElement.asType()), "activity");
-        waring("111111111111111111111111111111111111");
+        gradleLog("111111111111111111111111111111111111");
         //generaClass
         TypeSpec injectClass = TypeSpec.interfaceBuilder(mTypeElement.getSimpleName() + "$$Component")
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(ActivityScope.class)
+                .addAnnotation(ClassName.get("com.spc","ActivityScope"))
                 .addAnnotation(AnnotationSpec.builder(Component.class)
                         .addMember("dependencies", "$L", "com.spc.spc.myapplication.di.component.Appcomponent.class")
                         .addMember("modules", "$L", "com.spc.spc.myapplication.di.module.ActivityModule.class")
                         .build())
                 .addMethod(injectMethod.build())
                 .build();
-        waring("22222222222222222222222222222");
+        gradleLog("---->dagger   Component   buuild success");
         String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
         return JavaFile.builder(packgeName, injectClass).build();
     }
 
-    private void waring(String msg, Object... args) {
-        mMessager.printMessage(Diagnostic.Kind.WARNING, String.format(msg, args));
+    private void gradleLog(String msg, Object... args) {
+        mMessager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
     }
 }

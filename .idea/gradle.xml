@@ -12,7 +12,6 @@
             <option value="$PROJECT_DIR$/basesdk" />
             <option value="$PROJECT_DIR$/inject_annotation" />
             <option value="$PROJECT_DIR$/inject_comiler" />
-            <option value="$PROJECT_DIR$/injectlib" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
