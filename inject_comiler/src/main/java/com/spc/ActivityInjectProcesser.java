@@ -55,7 +55,9 @@ public class ActivityInjectProcesser extends AbstractProcessor {
 
         for (AnnotatedClass annotatedClass : mAnnotatedClassMap.values()) {
             try {
+                annotatedClass.generateDaggerFile().writeTo(mFiler);
                 annotatedClass.generateFile().writeTo(mFiler);
+
             } catch (Exception e) {
                 error("Generate file failed, reason: %s", e.getMessage());
             }

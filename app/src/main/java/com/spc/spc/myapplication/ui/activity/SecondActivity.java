@@ -1,35 +1,18 @@
 package com.spc.spc.myapplication.ui.activity;
 
-import android.os.Bundle;
-
 import com.spc.ActivityInject;
 import com.spc.spc.myapplication.R;
 import com.spc.spc.myapplication.base.BaseMVPActivity;
-import com.spc.spc.myapplication.mvp.view.SecondAcView;
-import com.spc.spc.myapplication.ui.fragment.SecondAcPresenter;
-
-import butterknife.OnClick;
+import com.spc.spc.myapplication.mvp.presenter.SecondPrsenter;
+import com.spc.spc.myapplication.mvp.view.SecondView;
 
 /**
- * Created by spc on 2017/6/6.
+ * Created by spc on 2017/6/7.
  */
-
-@ActivityInject//apt注解注入。不需要手写
-public class SecondActivity extends BaseMVPActivity<SecondAcPresenter> implements SecondAcView {
+@ActivityInject
+public class SecondActivity extends BaseMVPActivity<SecondPrsenter>  implements SecondView {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_second;
     }
-
-    @Override
-
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @OnClick(R.id.button)
-    public void textonclick() {
-        finish();
-    }
-
 }

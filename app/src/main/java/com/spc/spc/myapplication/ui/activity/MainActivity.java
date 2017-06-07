@@ -17,7 +17,6 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
 
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mvpPresenter.loadData();

@@ -1,6 +1,8 @@
 package com.spc.spc.myapplication.base;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.spc.spc.myapplication.di.component.Appcomponent;
 import com.spc.spc.myapplication.di.component.DaggerAppcomponent;
@@ -30,5 +32,12 @@ public class MyApplication extends Application {
 
     public Appcomponent getAppComponent() {
         return mAppcomponent;
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
