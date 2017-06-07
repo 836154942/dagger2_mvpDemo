@@ -1,4 +1,4 @@
-package com.spc;
+package com.spc.spc.myapplication.di.scope;
 
 
 import javax.inject.Scope;

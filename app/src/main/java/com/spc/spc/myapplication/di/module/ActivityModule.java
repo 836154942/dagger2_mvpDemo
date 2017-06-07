@@ -1,7 +1,7 @@
 package com.spc.spc.myapplication.di.module;
 
 
-import com.spc.ActivityScope;
+import com.spc.spc.myapplication.di.scope.ActivityScope;
 import com.spc.spc.myapplication.base.BaseMVPActivity;
 
 import dagger.Module;

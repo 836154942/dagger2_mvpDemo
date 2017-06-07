@@ -15,8 +15,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
-import dagger.Component;
-
 
 /**
  * Created by spc on 17/6/6.
@@ -35,16 +33,20 @@ public class AnnotatedClass {
 
 
     public JavaFile generateFile() {
+        // build inject method
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(TypeName.get(mTypeElement.asType()), "activity", Modifier.FINAL);
-        injectMethod.addStatement(TypeUtil.MAIN_ACTIVITY_PATH + ".$L.builder()\n.appcomponent($L)\n" +
-                        ".activityModule(new $L(activity))\n" +
+        injectMethod.addStatement(TypeUtil.MAIN_ACTIVITY_PATH + ".$L.builder()\n.$L($L)\n" +
+                        ".$L(new $L(activity))\n" +
                         ".build()\n.$L(activity)",
                 "Dagger" + mTypeElement.getSimpleName() + "$$Component",
+                TypeUtil.APP_Component_Name,
                 TypeUtil.APPCOMPONENT_PROVIDE_PATH,
+                TypeUtil.APP_ActivityModule_Name,
                 TypeUtil.ACTIVITY_MODULE_PATH,
                 TypeUtil.METHOD_NAME);
+
         //generaClass
         TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
                 .addModifiers(Modifier.PUBLIC)
@@ -59,14 +61,13 @@ public class AnnotatedClass {
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addParameter(TypeName.get(mTypeElement.asType()), "activity");
-        gradleLog("111111111111111111111111111111111111");
         //generaClass
         TypeSpec injectClass = TypeSpec.interfaceBuilder(mTypeElement.getSimpleName() + "$$Component")
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(ClassName.get("com.spc","ActivityScope"))
-                .addAnnotation(AnnotationSpec.builder(Component.class)
-                        .addMember("dependencies", "$L", "com.spc.spc.myapplication.di.component.Appcomponent.class")
-                        .addMember("modules", "$L", "com.spc.spc.myapplication.di.module.ActivityModule.class")
+                .addAnnotation(TypeUtil.ACTIVITY_SCOPE_CLASSNAME)
+                .addAnnotation(AnnotationSpec.builder(ClassName.get("dagger", "Component"))
+                        .addMember("dependencies", "$L", TypeUtil.APP_COMPONENT_PATH + ".class")
+                        .addMember("modules", "$L", TypeUtil.ACTIVITY_MODULE_PATH + ".class")
                         .build())
                 .addMethod(injectMethod.build())
                 .build();
