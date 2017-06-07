@@ -4,7 +4,7 @@ package com.spc;
 import com.squareup.javapoet.ClassName;
 
 /**
- * Created by JokAr on 16/8/8.
+ * Created by spc on 17/6/6.
  */
 public class TypeUtil {
     public static final String METHOD_NAME = "inject";//生成类的方法名字

@@ -12,11 +12,12 @@ import com.spc.spc.myapplication.mvp.view.MainacView;
 
 import butterknife.OnClick;
 
-
+@ActivityInject//apt注解注入。不需要手写
 public class MainActivity extends BaseMVPActivity<MainPresenter> implements MainacView {
 
-    @ActivityInject//apt注解注入。不需要手写
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mvpPresenter.loadData();

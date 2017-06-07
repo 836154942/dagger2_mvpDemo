@@ -14,7 +14,7 @@ import butterknife.OnClick;
  * Created by spc on 2017/6/6.
  */
 
-
+@ActivityInject//apt注解注入。不需要手写
 public class SecondActivity extends BaseMVPActivity<SecondAcPresenter> implements SecondAcView {
     @Override
     protected int getLayoutId() {
@@ -22,7 +22,7 @@ public class SecondActivity extends BaseMVPActivity<SecondAcPresenter> implement
     }
 
     @Override
-    @ActivityInject//apt注解注入。不需要手写
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }

@@ -8,22 +8,26 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
+import javax.annotation.processing.Messager;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
+import javax.tools.Diagnostic;
 
 
 /**
- * Created by JokAr on 16/8/8.
+ * Created by spc on 17/6/6.
  */
 public class AnnotatedClass {
 
-    private TypeElement mTypeElement;
+    private TypeElement mTypeElement;//activity
     private Elements mElements;
+    private Messager mMessager;//日志打印
 
-    public AnnotatedClass(TypeElement typeElement, Elements elements) {
+    public AnnotatedClass(TypeElement typeElement, Elements elements, Messager messager) {
         mTypeElement = typeElement;
         mElements = elements;
+        this.mMessager = messager;
     }
 
 
@@ -37,7 +41,6 @@ public class AnnotatedClass {
                 .addStatement("((com.spc.spc.myapplication.di.component.ActivityComponent)object).inject(host)");
 
         //generaClass
-
         TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
 //                .addAnnotation(InjectActivity.class)
                 .addModifiers(Modifier.PUBLIC)
@@ -46,5 +49,9 @@ public class AnnotatedClass {
                 .build();
         String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
         return JavaFile.builder(packgeName, injectClass).build();
+    }
+
+    private void waring(String msg, Object... args) {
+        mMessager.printMessage(Diagnostic.Kind.WARNING, String.format(msg, args));
     }
 }

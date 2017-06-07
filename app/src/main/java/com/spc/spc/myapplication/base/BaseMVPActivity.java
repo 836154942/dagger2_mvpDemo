@@ -20,8 +20,8 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityInject.inject(this,
-        DaggerActivityComponent.builder()
+
+        ActivityInject.inject(this,  DaggerActivityComponent.builder()
                 .appcomponent(MyApplication.getInst().getAppComponent())
                 .activityModule(new ActivityModule(this))
                 .build());

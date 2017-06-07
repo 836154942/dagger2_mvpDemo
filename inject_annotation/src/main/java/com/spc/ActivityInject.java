@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 //@Target(ElementType.TYPE)
 
 @Retention(RetentionPolicy.CLASS)
-@Target(ElementType.METHOD)
+@Target(ElementType.TYPE)
 public @interface ActivityInject {
 //    int[] value();
 }

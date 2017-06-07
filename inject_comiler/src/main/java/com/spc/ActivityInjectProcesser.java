@@ -3,7 +3,6 @@ package com.spc;
 import com.google.auto.service.AutoService;
 import com.spc.model.AnnotatedClass;
 
-import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -17,18 +16,19 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 
 
 /**
- * Created by JokAr on 16/8/8.
+ * Created by spc on 17/6/6.
  */
 @AutoService(Processor.class)
 public class ActivityInjectProcesser extends AbstractProcessor {
     private Filer mFiler; //文件相关的辅助类
-    private Elements mElementUtils; //元素相关的辅助类
+    private Elements mElementUtils; //元素相关的辅助类  许多元素
     private Messager mMessager; //日志相关的辅助类
 
     private Map<String, AnnotatedClass> mAnnotatedClassMap;
@@ -56,7 +56,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
         for (AnnotatedClass annotatedClass : mAnnotatedClassMap.values()) {
             try {
                 annotatedClass.generateFile().writeTo(mFiler);
-            } catch (IOException e) {
+            } catch (Exception e) {
                 error("Generate file failed, reason: %s", e.getMessage());
             }
         }
@@ -65,17 +65,24 @@ public class ActivityInjectProcesser extends AbstractProcessor {
 
 
     private void processOnClick(RoundEnvironment roundEnv) throws IllegalArgumentException {
+        //check rules
         for (Element element : roundEnv.getElementsAnnotatedWith(ActivityInject.class)) {
-            getAnnotatedClass(element);
+            if (element.getKind() == ElementKind.CLASS) {
+                getAnnotatedClass(element);
+            } else
+                error("ActivityInject only can use  in ElementKind.CLASS");
         }
     }
 
     private AnnotatedClass getAnnotatedClass(Element element) {
-        TypeElement typeElement = (TypeElement) element.getEnclosingElement();
+        // tipe . can not use chines  so  ....
+        // get TypeElement  element is class's --->class  TypeElement typeElement = (TypeElement) element
+        //  get TypeElement  element is method's ---> TypeElement typeElement = (TypeElement) element.getEnclosingElement();
+        TypeElement typeElement = (TypeElement) element;
         String fullName = typeElement.getQualifiedName().toString();
         AnnotatedClass annotatedClass = mAnnotatedClassMap.get(fullName);
         if (annotatedClass == null) {
-            annotatedClass = new AnnotatedClass(typeElement, mElementUtils);
+            annotatedClass = new AnnotatedClass(typeElement, mElementUtils, mMessager);
             mAnnotatedClassMap.put(fullName, annotatedClass);
         }
         return annotatedClass;
@@ -97,5 +104,9 @@ public class ActivityInjectProcesser extends AbstractProcessor {
 
     private void error(String msg, Object... args) {
         mMessager.printMessage(Diagnostic.Kind.ERROR, String.format(msg, args));
+    }
+
+    private void waring(String msg, Object... args) {
+        mMessager.printMessage(Diagnostic.Kind.WARNING, String.format(msg, args));
     }
 }

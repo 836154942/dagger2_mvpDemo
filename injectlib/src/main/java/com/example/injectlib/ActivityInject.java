@@ -1,6 +1,5 @@
 package com.example.injectlib;
 
-import android.content.res.ObbInfo;
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 
@@ -10,8 +9,6 @@ import android.support.v7.app.AppCompatActivity;
  */
 public class ActivityInject {
     private static final ArrayMap<String, Inject> injectMap = new ArrayMap<>();
-
-
 
     public static void inject(AppCompatActivity host, Object object) {
         String className = host.getClass().getName();
