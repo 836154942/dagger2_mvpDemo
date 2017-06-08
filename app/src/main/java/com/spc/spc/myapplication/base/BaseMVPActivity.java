@@ -2,7 +2,7 @@ package com.spc.spc.myapplication.base;
 
 import android.os.Bundle;
 
-import com.spc.spc.myapplication.di.ActivityInject;
+import com.spc.spc.myapplication.di.aptinject.InjectActivity;
 
 import javax.inject.Inject;
 
@@ -18,7 +18,7 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityInject.inject(this);
+        InjectActivity.inject(this);
         mvpPresenter.attachView(this);
 
     }

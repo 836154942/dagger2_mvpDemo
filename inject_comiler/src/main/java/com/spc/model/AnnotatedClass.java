@@ -48,7 +48,7 @@ public class AnnotatedClass {
                 TypeUtil.METHOD_NAME);
 
         //generaClass
-        TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$ActivityInject")
+        TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$InjectActivity")
                 .addModifiers(Modifier.PUBLIC)
 //                .addSuperinterface(ParameterizedTypeName.get(TypeUtil.INJET_NAME, TypeName.get(mTypeElement.asType())))
                 .addMethod(injectMethod.build())

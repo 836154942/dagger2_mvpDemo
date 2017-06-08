@@ -45,5 +45,6 @@ public class TypeUtil {
      */
     public static final String METHOD_NAME = "inject";
 
+    public static final String ANNOTATION_PATH ="com.spc.ActivityInject";
 //    public static final ClassName INJET_NAME = ClassName.get("com.example.injectlib", "Inject");
 }

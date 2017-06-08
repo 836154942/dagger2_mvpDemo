@@ -1,4 +1,4 @@
-package com.spc.spc.myapplication.di;
+package com.spc.spc.myapplication.di.aptinject;
 
 import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 /**
  * Created by JokAr on 16/8/6.
  */
-public class ActivityInject {
+public class InjectActivity {
     private static final ArrayMap<String, Object> injectMap = new ArrayMap<>();
 
     public static void inject(AppCompatActivity activity) {
@@ -19,7 +19,7 @@ public class ActivityInject {
             Object inject = injectMap.get(className);
 
             if (inject == null) {
-                Class<?> aClass = Class.forName(className + "$$ActivityInject");
+                Class<?> aClass = Class.forName(className + "$$InjectActivity");
                 inject =  aClass.newInstance();
                 injectMap.put(className, inject);
             }

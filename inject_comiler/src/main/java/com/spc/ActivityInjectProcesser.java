@@ -3,6 +3,7 @@ package com.spc;
 import com.google.auto.service.AutoService;
 import com.spc.model.AnnotatedClass;
 
+import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
 
         try {
             processOnClick(roundEnv);
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             error(e.getMessage());
         }
@@ -66,9 +67,9 @@ public class ActivityInjectProcesser extends AbstractProcessor {
     }
 
 
-    private void processOnClick(RoundEnvironment roundEnv) throws IllegalArgumentException {
-        //check rules
-        for (Element element : roundEnv.getElementsAnnotatedWith(ActivityInject.class)) {
+    private void processOnClick(RoundEnvironment roundEnv) throws IllegalArgumentException, ClassNotFoundException {
+        //check ruleslass forName(String className
+        for (Element element : roundEnv.getElementsAnnotatedWith((Class<? extends Annotation>) Class.forName(TypeUtil.ANNOTATION_PATH))) {
             if (element.getKind() == ElementKind.CLASS) {
                 getAnnotatedClass(element);
             } else
@@ -100,7 +101,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
     @Override
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
-        types.add(ActivityInject.class.getCanonicalName());
+        types.add(TypeUtil.ANNOTATION_PATH);
         return types;
     }
 

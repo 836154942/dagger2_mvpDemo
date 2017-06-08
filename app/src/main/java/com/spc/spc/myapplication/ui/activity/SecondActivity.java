@@ -1,5 +1,6 @@
 package com.spc.spc.myapplication.ui.activity;
 
+
 import com.spc.ActivityInject;
 import com.spc.spc.myapplication.R;
 import com.spc.spc.myapplication.base.BaseMVPActivity;
