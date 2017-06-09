@@ -9,6 +9,7 @@ import com.spc.spc.myapplication.R;
 import com.spc.spc.myapplication.base.BaseMVPActivity;
 import com.spc.spc.myapplication.mvp.presenter.MainPresenter;
 import com.spc.spc.myapplication.mvp.view.MainacView;
+import com.spc.spc.myapplication.ui.fragment.Test1Fragment;
 
 import butterknife.OnClick;
 
@@ -20,7 +21,7 @@ public class MainActivity extends BaseMVPActivity<MainPresenter> implements Main
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mvpPresenter.loadData();
-
+        getSupportFragmentManager().beginTransaction().add(R.id.frame1, new Test1Fragment()).commit();
     }
 
     @OnClick(R.id.btn1)

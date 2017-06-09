@@ -21,7 +21,7 @@ import javax.tools.Diagnostic;
  */
 public class AnnotatedClass {
 
-    private TypeElement mTypeElement;//activity
+    private TypeElement mTypeElement;//activity  //fragmemt
     private Elements mElements;
     private Messager mMessager;//日志打印
 
@@ -32,7 +32,7 @@ public class AnnotatedClass {
     }
 
 
-    public JavaFile generateFile() {
+    public JavaFile generateActivityFile() {
         // build inject method
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -57,7 +57,7 @@ public class AnnotatedClass {
         return JavaFile.builder(packgeName, injectClass).build();
     }
 
-    public JavaFile generateDaggerFile() {
+    public JavaFile generateActivityDaggerFile() {
         MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
                 .addParameter(TypeName.get(mTypeElement.asType()), "activity");
@@ -71,12 +71,62 @@ public class AnnotatedClass {
                         .build())
                 .addMethod(injectMethod.build())
                 .build();
-        gradleLog("---->dagger   Component   buuild success");
+        gradleLog("---->dagger   " + mTypeElement.getSimpleName() + "    Component   buuild success");
+        String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
+        return JavaFile.builder(packgeName, injectClass).build();
+    }
+
+
+
+
+    public JavaFile generateFragmentFile() {
+        // build inject method
+        MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC)
+                .addParameter(TypeName.get(mTypeElement.asType()), "fragment", Modifier.FINAL);
+        injectMethod.addStatement(TypeUtil.MAIN_FRAGMENT_PATH + ".$L.builder()\n.$L($L)\n" +
+                        ".$L(new $L(fragment))\n" +
+                        ".build()\n.$L(fragment)",
+                "Dagger" + mTypeElement.getSimpleName() + "$$Component",
+                TypeUtil.APP_Component_Name,
+                TypeUtil.APPCOMPONENT_PROVIDE_PATH,
+                TypeUtil.APP_FragmentModule_Name,
+                TypeUtil.FRAGMENT_MODULE_PATH,
+                TypeUtil.METHOD_NAME);
+
+        //generaClass
+        TypeSpec injectClass = TypeSpec.classBuilder(mTypeElement.getSimpleName() + "$$InjectFragment")
+                .addModifiers(Modifier.PUBLIC)
+                .addMethod(injectMethod.build())
+                .build();
+        String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
+        return JavaFile.builder(packgeName, injectClass).build();
+    }
+
+    public JavaFile generateFragmentDaggerFile() {
+        MethodSpec.Builder injectMethod = MethodSpec.methodBuilder(TypeUtil.METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT)
+                .addParameter(TypeName.get(mTypeElement.asType()), "fragment");
+        //generaClass
+        TypeSpec injectClass = TypeSpec.interfaceBuilder(mTypeElement.getSimpleName() + "$$Component")
+                .addModifiers(Modifier.PUBLIC)
+                .addAnnotation(TypeUtil.FRAGMENT_SCOPE_CLASSNAME)
+                .addAnnotation(AnnotationSpec.builder(ClassName.get("dagger", "Component"))
+                        .addMember("dependencies", "$L", TypeUtil.APP_COMPONENT_PATH + ".class")
+                        .addMember("modules", "$L", TypeUtil.FRAGMENT_MODULE_PATH + ".class")
+                        .build())
+                .addMethod(injectMethod.build())
+                .build();
+        gradleLog("---->dagger   " + mTypeElement.getSimpleName() + "    Component   buuild success");
         String packgeName = mElements.getPackageOf(mTypeElement).getQualifiedName().toString();
         return JavaFile.builder(packgeName, injectClass).build();
     }
 
     private void gradleLog(String msg, Object... args) {
         mMessager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
+    }
+
+    public TypeElement getmTypeElement() {
+        return mTypeElement;
     }
 }

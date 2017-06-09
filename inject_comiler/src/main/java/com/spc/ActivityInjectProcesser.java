@@ -48,7 +48,8 @@ public class ActivityInjectProcesser extends AbstractProcessor {
         mAnnotatedClassMap.clear();
 
         try {
-            processOnClick(roundEnv);
+            processActivityCheck(roundEnv);
+            processFragmentCheck(roundEnv);
         } catch (Exception e) {
             e.printStackTrace();
             error(e.getMessage());
@@ -56,8 +57,16 @@ public class ActivityInjectProcesser extends AbstractProcessor {
 
         for (AnnotatedClass annotatedClass : mAnnotatedClassMap.values()) {
             try {
-                annotatedClass.generateDaggerFile().writeTo(mFiler);
-                annotatedClass.generateFile().writeTo(mFiler);
+                Class fgAnType = Class.forName(TypeUtil.ANNOTATION_FRAGMENT_PATH);
+                Class acAnType = Class.forName(TypeUtil.ANNOTATION_PATH);
+                if (annotatedClass.getmTypeElement().getAnnotation(fgAnType) != null) {
+                    annotatedClass.generateFragmentDaggerFile().writeTo(mFiler);
+                    annotatedClass.generateFragmentFile().writeTo(mFiler);
+                } else if (annotatedClass.getmTypeElement().getAnnotation(acAnType) != null){
+                    annotatedClass.generateActivityDaggerFile().writeTo(mFiler);
+                    annotatedClass.generateActivityFile().writeTo(mFiler);
+                }
+
 
             } catch (Exception e) {
                 error("Generate file failed, reason: %s", e.getMessage());
@@ -67,13 +76,23 @@ public class ActivityInjectProcesser extends AbstractProcessor {
     }
 
 
-    private void processOnClick(RoundEnvironment roundEnv) throws IllegalArgumentException, ClassNotFoundException {
+    private void processActivityCheck(RoundEnvironment roundEnv) throws IllegalArgumentException, ClassNotFoundException {
         //check ruleslass forName(String className
         for (Element element : roundEnv.getElementsAnnotatedWith((Class<? extends Annotation>) Class.forName(TypeUtil.ANNOTATION_PATH))) {
             if (element.getKind() == ElementKind.CLASS) {
                 getAnnotatedClass(element);
             } else
                 error("ActivityInject only can use  in ElementKind.CLASS");
+        }
+    }
+
+    private void processFragmentCheck(RoundEnvironment roundEnv) throws IllegalArgumentException, ClassNotFoundException {
+        //check ruleslass forName(String className
+        for (Element element : roundEnv.getElementsAnnotatedWith((Class<? extends Annotation>) Class.forName(TypeUtil.ANNOTATION_FRAGMENT_PATH))) {
+            if (element.getKind() == ElementKind.CLASS) {
+                getAnnotatedClass(element);
+            } else
+                error("FragmentInject only can use  in ElementKind.CLASS");
         }
     }
 
@@ -102,6 +121,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
     public Set<String> getSupportedAnnotationTypes() {
         Set<String> types = new LinkedHashSet<>();
         types.add(TypeUtil.ANNOTATION_PATH);
+        types.add(TypeUtil.ANNOTATION_FRAGMENT_PATH);
         return types;
     }
 
@@ -109,7 +129,7 @@ public class ActivityInjectProcesser extends AbstractProcessor {
         mMessager.printMessage(Diagnostic.Kind.ERROR, String.format(msg, args));
     }
 
-    private void waring(String msg, Object... args) {
-        mMessager.printMessage(Diagnostic.Kind.WARNING, String.format(msg, args));
+    private void log(String msg, Object... args) {
+        mMessager.printMessage(Diagnostic.Kind.NOTE, String.format(msg, args));
     }
 }

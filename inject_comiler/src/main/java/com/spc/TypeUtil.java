@@ -15,6 +15,7 @@ public class TypeUtil {
      * activity ????
      */
     public static final String MAIN_ACTIVITY_PATH = MAIN_PROJECT_PACKAGE_NAME + ".ui.activity";
+    public static final String MAIN_FRAGMENT_PATH = MAIN_PROJECT_PACKAGE_NAME + ".ui.fragment";
 
     /**
      * app???component ???? ????  ??
@@ -29,6 +30,13 @@ public class TypeUtil {
     public static final String APP_ActivityModule_Name_Capital = "ActivityModule";
     public static final String ACTIVITY_MODULE_PATH = MAIN_PROJECT_PACKAGE_NAME + ".di.module." + APP_ActivityModule_Name_Capital;
 
+    /**
+     * fragment module
+     */
+    public static final String APP_FragmentModule_Name = "fragmentModule";
+    public static final String APP_FragmentModule_Name_Capital = "FragmentModule";
+    public static final String FRAGMENT_MODULE_PATH = MAIN_PROJECT_PACKAGE_NAME + ".di.module." + APP_FragmentModule_Name_Capital;
+
 
     /**
      * ??application????App???  Component???
@@ -36,15 +44,17 @@ public class TypeUtil {
     public static final String APPCOMPONENT_PROVIDE_PATH = MAIN_PROJECT_PACKAGE_NAME + ".base.MyApplication.getInst().getAppComponent()";
 
     /**
-     * ActivityScope ???
+     * Scope ???
      */
     public static final ClassName ACTIVITY_SCOPE_CLASSNAME = ClassName.get(MAIN_PROJECT_PACKAGE_NAME + ".di.scope", "ActivityScope");
+    public static final ClassName FRAGMENT_SCOPE_CLASSNAME = ClassName.get(MAIN_PROJECT_PACKAGE_NAME + ".di.scope", "FragmentScope");
 
     /**
      * ???????
      */
     public static final String METHOD_NAME = "inject";
 
-    public static final String ANNOTATION_PATH ="com.spc.ActivityInject";
+    public static final String ANNOTATION_PATH = "com.spc.ActivityInject";
+    public static final String ANNOTATION_FRAGMENT_PATH = "com.spc.FragmentInject";
 //    public static final ClassName INJET_NAME = ClassName.get("com.example.injectlib", "Inject");
 }
