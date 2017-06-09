@@ -2,7 +2,7 @@ package com.spc.spc.myapplication.mvp.presenter;
 
 import com.spc.spc.myapplication.base.BasePresenter;
 import com.spc.spc.myapplication.mvp.view.TestFg1View;
-import com.spc.spc.myapplication.ui.fragment.BaseMvpFragment;
+import com.spc.spc.myapplication.base.BaseMvpFragment;
 
 import javax.inject.Inject;
 

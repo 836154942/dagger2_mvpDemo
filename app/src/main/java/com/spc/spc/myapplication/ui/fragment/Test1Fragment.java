@@ -8,13 +8,14 @@ import android.view.ViewGroup;
 
 import com.spc.FragmentInject;
 import com.spc.spc.myapplication.R;
+import com.spc.spc.myapplication.base.BaseMvpFragment;
 import com.spc.spc.myapplication.mvp.presenter.TestFg1Presenter;
 import com.spc.spc.myapplication.mvp.view.TestFg1View;
 
 /**
  * Created by spc on 2017/6/9.
  */
-@FragmentInject
+@FragmentInject //完成fragment   dagger2初始化注入的注解
 public class Test1Fragment extends BaseMvpFragment<TestFg1Presenter> implements TestFg1View {
     @Nullable
     @Override

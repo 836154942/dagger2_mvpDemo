@@ -12,7 +12,6 @@ import javax.inject.Inject;
 
 public class SecondPrsenter extends BasePresenter<SecondView> {
     @Inject
-
     public SecondPrsenter(BaseMVPActivity activity) {
     }
 }

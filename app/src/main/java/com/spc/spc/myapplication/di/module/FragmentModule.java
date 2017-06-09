@@ -1,7 +1,7 @@
 package com.spc.spc.myapplication.di.module;
 
 import com.spc.spc.myapplication.di.scope.FragmentScope;
-import com.spc.spc.myapplication.ui.fragment.BaseMvpFragment;
+import com.spc.spc.myapplication.base.BaseMvpFragment;
 
 import dagger.Module;
 import dagger.Provides;
