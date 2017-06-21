@@ -20,7 +20,6 @@ public abstract class BaseMVPActivity<P extends BasePresenter> extends BaseActiv
         super.onCreate(savedInstanceState);
         InjectActivity.inject(this);
         mvpPresenter.attachView(this);
-
     }
 
     @Override

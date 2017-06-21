@@ -1,7 +1,6 @@
 package com.spc;
 
 import com.google.auto.service.AutoService;
-import com.spc.model.AnnotatedClass;
 
 import java.lang.annotation.Annotation;
 import java.util.LinkedHashSet;

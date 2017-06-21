@@ -1,4 +1,4 @@
-package com.spc.model;
+package com.spc;
 
 
 import com.spc.TypeUtil;
